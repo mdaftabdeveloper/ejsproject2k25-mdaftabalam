@@ -1,0 +1,87 @@
+<%- include ('./base/header.ejs') %>
+    <%- include ('./base/nav.ejs') %>
+        <div class="container">
+            <div class="alert bg-success my-3 text-center" style="color: white">
+                <h4>Add Student</h4>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col"></div>
+
+                <div class="col">
+                    <form action="/add/student" method="post" enctype="multipart/form-data">
+                        <div>
+                            <label for="" class="form-label">Roll No:</label>
+                            <input type="number" class="form-control" name="rollNo">
+                        </div>
+                        <div>
+                            <label for="" class="form-label">Student Name:</label>
+                            <input type="text" class="form-control" name="studentName">
+                        </div>
+                        <div>
+                            <label for="" class="form-label">Father's Name</label>
+                            <input type="text" class="form-control" name="fatherName">
+                        </div>
+                        <div>
+                            <label for="" class="form-label">Course:</label>
+                            <select class="form-control rounded-4 mb-2" name="course" id="course"
+                                onchange="showBranches(this.value)">
+                                <option value="">-- Select Course --</option>
+                                <option value="B.Tech">B. Tech</option>
+                                <option value="MCA">MCA</option>
+                                <option value="MBA">MBA</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="" class="form-label">Brach:</label>
+                            <select class="form-control rounded-4 mb-2" name="branch" id="branch">
+                                <option value="">-- Select Branch --</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="" class="form-label">Year Of Admission:</label>
+                            <select class="form-control rounded-4 mb-2" name="yearOfAdmission" id="">
+                                <% for (let i=0; i< 6; i++) { %>
+                                    <option value="<%= new Date().getFullYear() + i %>">
+                                        <%= new Date().getFullYear() + i %>
+                                    </option>
+                                    <%}%>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="" class="form-label">Select Student Image</label>
+                            <input type="file" class="form-control" name="studentImage">
+                        </div>
+                        <input type="submit" value="Add Student" class="btn btn-warning w-100 my-3">
+
+                    </form>
+                </div>
+                <div class="col"></div>
+            </div>
+
+        </div>
+
+        <script>
+            function showBranches(course) {
+                const branchSelect = document.getElementById("branch");
+                branchSelect.innerHTML = '<option value="">--Select Branch--</option>';
+                let branches = [];
+                if (course === "B.Tech") {
+                    branches = ["CSE", "ECE", "ME", "CE", "IT"];
+                } else if (course === "MCA") {
+                    branches = ["SE", "AI", "ML"];
+                } else if (course === "MBA") {
+                    branches = ["Accounts", "BST", "Economics"];
+                }
+
+                branches.forEach((branch) => {
+                    let opt = document.createElement("option");
+                    opt.value = branch;
+                    opt.innerHTML = branch;
+                    branchSelect.appendChild(opt);
+                });
+            }
+        </script>
+        <%- include('./base/footer.ejs') %>
